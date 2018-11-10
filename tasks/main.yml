@@ -3,7 +3,7 @@
   docker_container:
     name: "{{ GALAXY_POSTGRES_CONTAINER_NAME }}"
     image: postgres:latest
-    environment:
+    env:
         - POSTGRES_DB: "{{ GALAXY_POSTGRES_DATABASE }}"
         - POSTGRES_USER: "{{ GALAXY_POSTGRES_USER }}"
         - POSTGRES_PASSWORD: "{{ GALAXY_POSTGRES_PASSWORD }}"
@@ -12,7 +12,7 @@
   docker_container:
     name: "{{ GALAXY_RABBITMQ_HOST }}"
     image: rabbitmq:latest
-    environment:
+    env:
         - RABBITMQ_DEFAULT_USER: "{{ GALAXY_RABBITMQ_USER }}"
         - RABBITMQ_DEFAULT_PASS: "{{ GALAXY_RABBITMQ_PASSWORD }}"
         - RABBITMQ_DEFAULT_VHOST: "{{ GALAXY_RABBITMQ_VHOST }}"
@@ -24,7 +24,7 @@
     command: ['/bin/bash', '-c', '/entrypoint.sh manage waitenv && /entrypoint.sh manage migrate --noinput && /entrypoint.sh run web']
     published_port:
         - 8000:8000
-    environment:
+    env:
         - GALAXY_SECRET_KEY: "{{ GALAXY_SECRET_KEY }}"
         - GALAXY_DB_URL: "{{ GALAXY_POSTGRES_URL }}"
         - GALAXY_RABBITMQ_HOST: "{{ GALAXY_RABBITMQ_HOST }}"
@@ -38,7 +38,7 @@
     name: "{{ GALAXY_WORKER_CONTAINER_NAME }}"
     image: ansible/galaxy:latest
     command: ['/bin/bash', '-c', '/entrypoint.sh manage waitenv --wait-for {{ GALAXY_WEB_CONTAINER_NAME }}:8000 && /entrypoint.sh run worker']
-    environment:
+    env:
         - GALAXY_SECRET_KEY: "{{ GALAXY_SECRET_KEY }}"
         - GALAXY_DB_URL: "{{ GALAXY_POSTGRES_URL }}"
         - GALAXY_RABBITMQ_HOST: "{{ GALAXY_RABBITMQ_HOST }}"
