@@ -20,7 +20,10 @@
 - name: Prepare Galaxy Web container
   docker_container:
     name: "{{ GALAXY_WEB_CONTAINER_NAME }}"
-    command: ['/bin/bash', '-c', '/entrypoint.sh manage waitenv && /entrypoint.sh manage migrate --noinput && /entrypoint.sh run web']
+    command: 
+        - './entrypoint.sh manage waitenv' 
+        - './entrypoint.sh manage migrate --noinput' 
+        - './entrypoint.sh run web'
     image: ansible/galaxy:latest
     ports:
         - 8000:8000
