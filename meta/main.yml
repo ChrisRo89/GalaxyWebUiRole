@@ -1,5 +1,4 @@
 ---
----
 galaxy_info:
   author: Chris R.
   description: Install docker NGINX-Reverse-Proxy with automatic letsencrypt
