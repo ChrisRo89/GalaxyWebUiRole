@@ -22,7 +22,7 @@
     name: "{{ GALAXY_WEB_CONTAINER_NAME }}"
     image: ansible/galaxy:latest
     command: ['/bin/bash', '-c', '/entrypoint.sh manage waitenv && /entrypoint.sh manage migrate --noinput && /entrypoint.sh run web']
-    published_port:
+    ports:
         - 8000:8000
     env:
         GALAXY_SECRET_KEY: "{{ GALAXY_SECRET_KEY }}"
